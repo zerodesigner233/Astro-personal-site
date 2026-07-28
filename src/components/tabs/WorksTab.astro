@@ -1,0 +1,87 @@
+---
+import { getCollection } from 'astro:content';
+
+const works = (await getCollection('works')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const categories = ['all', 'painting', 'music', 'design', 'code'] as const;
+
+const colorMap: Record<string, string> = {
+  painting: 'var(--color-accent)',
+  music: 'var(--color-accent-2)',
+  design: 'var(--color-amber)',
+  code: 'var(--color-green)',
+};
+
+function getSpanClass(i: number): string {
+  if (i === 0) return 'span-2';
+  if (i === 3) return 'span-row';
+  return '';
+}
+---
+
+<div class="container" style="padding-top:14px; padding-bottom:24px;">
+  <div class="section-title">
+    <h2 data-i18n="works.title">Selected Works</h2>
+    <span class="section-count">{works.length}</span>
+  </div>
+
+  <div class="tag-filter" id="work-filters">
+    {categories.map((cat) => (
+      <button class={cat === 'all' ? 'active' : ''} data-filter={cat}>
+        {cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1)}
+      </button>
+    ))}
+  </div>
+
+  <div class="bento-grid" id="works-grid">
+    {works.map((work, i) => {
+      const color = colorMap[work.data.category] || 'var(--text-3)';
+      return (
+        <a
+          href={`/works/${work.id}`}
+          class={`bento-item fade-in ${getSpanClass(i)}`}
+          data-category={work.data.category}
+        >
+          {work.data.cover ? (
+            <img src={work.data.cover} alt={work.data.title} class="bento-img" loading="lazy" />
+          ) : (
+            <div class="bento-placeholder" style={`color:${color};`}>
+              <span class="bento-letter">{work.data.title.charAt(0)}</span>
+            </div>
+          )}
+          <div class="bento-overlay">
+            <h3>{work.data.title}</h3>
+            <span>{work.data.category.charAt(0).toUpperCase() + work.data.category.slice(1)} &middot; {work.data.date.getFullYear()}</span>
+          </div>
+        </a>
+      );
+    })}
+  </div>
+</div>
+
+<script is:inline>
+  function initWorks() {
+    var filterBtns = document.querySelectorAll('#work-filters button');
+    var items = document.querySelectorAll('#works-grid .bento-item');
+    // Mark animation as done after first play to prevent re-animation on filter
+    if (!items[0] || !items[0]._animated) {
+      setTimeout(function() {
+        items.forEach(function(item) { item.classList.add('no-anim'); item._animated = true; });
+      }, 600);
+    }
+    filterBtns.forEach(function(btn) {
+      if (btn._bound) return;
+      btn._bound = true;
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        var filter = btn.getAttribute('data-filter');
+        items.forEach(function(item) {
+          var show = filter === 'all' || item.getAttribute('data-category') === filter;
+          item.classList.toggle('hidden', !show);
+        });
+      });
+    });
+  }
+  document.addEventListener('DOMContentLoaded', initWorks);
+  document.addEventListener('astro:page-load', initWorks);
+</script>

@@ -1,0 +1,29 @@
+---
+title: "WASM Image Processor"
+date: 2026-04-05
+category: "code"
+cover: ""
+tags: ["Rust", "WASM"]
+featured: true
+description: "A high-performance image processing library compiled to WebAssembly."
+---
+
+A Rust-based image processing library that compiles to WebAssembly for near-native performance in the browser.
+
+## Features
+
+- Real-time filter application
+- Edge detection
+- Color quantization
+- Image resizing with Lanczos resampling
+
+## Performance
+
+Benchmark results show 10-20x speedup over pure JavaScript implementations for CPU-intensive operations.
+
+## Tech Stack
+
+- Rust (image processing core)
+- wasm-bindgen (JS bindings)
+- Web Workers (non-blocking execution)
+- Canvas API (rendering)

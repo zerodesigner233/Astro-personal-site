@@ -1,0 +1,146 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+function fmt(d: Date) {
+  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+}
+
+const allTags = [...new Set(posts.flatMap(p => p.data.tags))];
+---
+
+<div class="container" style="padding-top:14px; padding-bottom:24px;">
+  <div class="section-title">
+    <h2 data-i18n="blog.title">Articles</h2>
+    <span class="section-count">{posts.length}</span>
+  </div>
+
+  <div class="search-box" id="blog-search" style="margin-bottom:8px;">
+    <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    <input type="text" placeholder="Search articles..." data-i18n-placeholder="blog.search" id="search-input" />
+  </div>
+
+  <div class="tag-filter" id="blog-filters">
+    <button class="active" data-filter="all" data-i18n="blog.all">All</button>
+    {allTags.map(tag => (
+      <button data-filter={tag}>{tag}</button>
+    ))}
+  </div>
+
+  <div class="post-list" id="posts-list">
+    {posts.map((post, i) => (
+      <a
+        href={`/blog/${post.id}`}
+        class="post-item fade-in"
+        data-tags={post.data.tags.join(',')}
+        data-title={post.data.title.toLowerCase()}
+      >
+        <span class="post-date">{fmt(post.data.date)}</span>
+        <span class="post-title"><span>{post.data.title}</span></span>
+        {post.data.tags[0] && <span class="post-tag">{post.data.tags[0]}</span>}
+      </a>
+    ))}
+  </div>
+
+  <div id="pagefind-results" style="display:none;"></div>
+
+  <div id="no-results" style="display:none; text-align:center; padding:40px 0; color:var(--text-3); font-size:13px;">
+    No results found.
+  </div>
+</div>
+
+<script is:inline>
+  function initBlog() {
+    var searchInput = document.getElementById('search-input');
+    var filterBtns = document.querySelectorAll('#blog-filters button');
+    var posts = document.querySelectorAll('#posts-list .post-item');
+    var noResults = document.getElementById('no-results');
+    var pagefindResults = document.getElementById('pagefind-results');
+    var postsList = document.getElementById('posts-list');
+    var activeFilter = 'all';
+    var pagefindReady = false;
+
+    function applyFilters() {
+      var query = searchInput ? searchInput.value.toLowerCase() : '';
+      var visible = 0;
+      posts.forEach(function(post) {
+        var tags = post.getAttribute('data-tags') || '';
+        var title = post.getAttribute('data-title') || '';
+        var matchFilter = activeFilter === 'all' || tags.split(',').indexOf(activeFilter) !== -1;
+        var matchSearch = !query || title.indexOf(query) !== -1;
+        if (matchFilter && matchSearch) {
+          post.style.display = '';
+          post.style.animation = 'none';
+          post.offsetHeight;
+          post.style.animation = 'slideIn 0.3s ease ' + (visible * 0.04) + 's forwards';
+          visible++;
+        } else {
+          post.style.display = 'none';
+        }
+      });
+      if (noResults) noResults.style.display = visible === 0 ? '' : 'none';
+      if (pagefindResults) pagefindResults.style.display = 'none';
+      if (postsList) postsList.style.display = visible > 0 ? '' : 'none';
+    }
+
+    async function pagefindSearch(query) {
+      if (!pagefindReady) {
+        try {
+          window.pagefind = await import('/pagefind/pagefind.js');
+          await window.pagefind.init();
+          pagefindReady = true;
+        } catch (e) {
+          console.log('Pagefind not available, falling back to title search');
+          applyFilters();
+          return;
+        }
+      }
+
+      var result = await window.pagefind.search(query);
+      postsList.style.display = 'none';
+      noResults.style.display = 'none';
+      pagefindResults.style.display = '';
+
+      var html = '';
+      for (var i = 0; i < Math.min(result.results.length, 10); i++) {
+        var data = await result.results[i].data();
+        html += '<a href="' + data.url + '" class="post-item fade-in" style="display:flex;text-decoration:none;">' +
+          '<span class="post-date">' + (data.meta.date || '') + '</span>' +
+          '<span class="post-title"><span>' + data.meta.title + '</span></span>' +
+          '</a>';
+      }
+      pagefindResults.innerHTML = html;
+      if (result.results.length === 0) noResults.style.display = '';
+    }
+
+    if (searchInput && !searchInput._bound) {
+      searchInput._bound = true;
+      var debounceTimer;
+      searchInput.addEventListener('input', function() {
+        var query = searchInput.value.trim();
+        clearTimeout(debounceTimer);
+        if (query.length < 2) {
+          pagefindResults.style.display = 'none';
+          postsList.style.display = '';
+          applyFilters();
+          return;
+        }
+        debounceTimer = setTimeout(function() { pagefindSearch(query); }, 300);
+      });
+    }
+
+    filterBtns.forEach(function(btn) {
+      if (btn._bound) return;
+      btn._bound = true;
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        activeFilter = btn.getAttribute('data-filter') || 'all';
+        applyFilters();
+      });
+    });
+  }
+  document.addEventListener('DOMContentLoaded', initBlog);
+  document.addEventListener('astro:page-load', initBlog);
+</script>

@@ -1,0 +1,38 @@
+---
+title: "Generative Art Engine"
+date: 2026-03-15
+category: "code"
+cover: ""
+tags: ["Creative Coding", "Canvas"]
+featured: false
+description: "A Canvas-based generative art engine for creating procedural artwork."
+---
+
+A lightweight JavaScript library for creating procedural art using Canvas 2D and WebGL.
+
+## Algorithms
+
+- Perlin noise flow fields
+- Voronoi tessellation
+- Reaction-diffusion systems
+- Particle systems
+
+## Example
+
+```javascript
+import { Engine } from './generative-engine';
+
+const engine = new Engine(canvas, {
+  algorithm: 'flow-field',
+  palette: ['#2563EB', '#7C3AED', '#EC4899'],
+  particles: 10000,
+});
+
+engine.start();
+```
+
+## Future Plans
+
+- WebGL 2.0 renderer
+- Audio reactivity
+- Export to high-res PNG

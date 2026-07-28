@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import WorksTab from '../components/tabs/WorksTab.astro';
+import BlogTab from '../components/tabs/BlogTab.astro';
+import AboutTab from '../components/tabs/AboutTab.astro';
+import { profile } from '../data/profile';
+---
+
+<BaseLayout title={profile.site.title}>
+  <Header />
+
+  <div class="tab-shell">
+    <div class="tab-content">
+      <section id="tab-works" class="tab-panel">
+        <WorksTab />
+      </section>
+      <section id="tab-blog" class="tab-panel">
+        <BlogTab />
+      </section>
+      <section id="tab-about" class="tab-panel">
+        <AboutTab />
+      </section>
+    </div>
+  </div>
+</BaseLayout>
