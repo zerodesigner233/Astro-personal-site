@@ -14,7 +14,7 @@ const isDetail = segments.length > 1;
 
 {isDetail ? (
   <header class="detail-header">
-      <a href="/" class="avatar" aria-label="Home">
+      <a href={import.meta.env.BASE_URL} class="avatar" aria-label="Home">
         <img src={media(profile.avatar)} alt={profile.name} class="avatar-img" />
       </a>
       <div style="flex:1"></div>
@@ -30,7 +30,7 @@ const isDetail = segments.length > 1;
 ) : (
   <header id="site-header">
     <div class="container flex items-center justify-between h-full">
-      <a href="/" class="avatar" aria-label="Home">
+      <a href={import.meta.env.BASE_URL} class="avatar" aria-label="Home">
         <img src={media(profile.avatar)} alt={profile.name} class="avatar-img" />
       </a>
 

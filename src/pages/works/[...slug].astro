@@ -21,7 +21,7 @@ function fmt(d: Date) {
 
 <DetailLayout title={`${work.data.title} | rapeseed_flower233`} description={work.data.description}>
   <article class="container-narrow" style="padding-top:24px; padding-bottom:48px;">
-    <a href="/" style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text-2);text-decoration:none;margin-bottom:24px;padding:8px 14px;border-radius:8px;background:var(--glass-bg);border:1px solid var(--glass-border);transition:background 0.2s,border-color 0.2s;width:fit-content;" onmouseover="this.style.background='var(--surface-2)';this.style.borderColor='var(--border-hover)'" onmouseout="this.style.background='var(--glass-bg)';this.style.borderColor='var(--glass-border)'" data-i18n="detail.back">← Back</a>
+    <a href={import.meta.env.BASE_URL} style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text-2);text-decoration:none;margin-bottom:24px;padding:8px 14px;border-radius:8px;background:var(--glass-bg);border:1px solid var(--glass-border);transition:background 0.2s,border-color 0.2s;width:fit-content;" onmouseover="this.style.background='var(--surface-2)';this.style.borderColor='var(--border-hover)'" onmouseout="this.style.background='var(--glass-bg)';this.style.borderColor='var(--glass-border)'" data-i18n="detail.back">← Back</a>
     <div class="fade-in">
       <div class="flex items-center gap-3 mb-3" style="margin-bottom:16px;">
         <span style="font-family:var(--font-mono); font-size:12px; color:var(--text-3);">{fmt(work.data.date)}</span>
@@ -50,7 +50,7 @@ function fmt(d: Date) {
       )}
 
       {work.data.cover && (
-        <a href="/" style="display:block;margin-bottom:24px; border-radius:12px; overflow:hidden; border:1px solid var(--border); cursor:pointer; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+        <a href={import.meta.env.BASE_URL} style="display:block;margin-bottom:24px; border-radius:12px; overflow:hidden; border:1px solid var(--border); cursor:pointer; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
           <img src={media(work.data.cover)} alt={work.data.title} style="width:100%;display:block;" />
         </a>
       )}
