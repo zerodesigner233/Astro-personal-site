@@ -1,6 +1,7 @@
 ---
 import DetailLayout from '../../layouts/DetailLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { media } from '../../data/media';
 
 export async function getStaticPaths() {
   const works = await getCollection('works');
@@ -50,7 +51,7 @@ function fmt(d: Date) {
 
       {work.data.cover && (
         <a href="/" style="display:block;margin-bottom:24px; border-radius:12px; overflow:hidden; border:1px solid var(--border); cursor:pointer; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
-          <img src={work.data.cover} alt={work.data.title} style="width:100%;display:block;" />
+          <img src={media(work.data.cover)} alt={work.data.title} style="width:100%;display:block;" />
         </a>
       )}
 

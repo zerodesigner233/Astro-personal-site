@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { media } from '../../data/media';
 
 const works = (await getCollection('works')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const categories = ['all', 'painting', 'music', 'design', 'code'] as const;
@@ -45,7 +46,7 @@ function getSpanClass(i: number): string {
           draggable="true"
         >
           {work.data.cover ? (
-            <img src={work.data.cover} alt={work.data.title} class="bento-img" loading="lazy" />
+            <img src={media(work.data.cover)} alt={work.data.title} class="bento-img" loading="lazy" />
           ) : (
             <div class="bento-placeholder" style={`color:${color};`}>
               <span class="bento-letter">{work.data.title.charAt(0)}</span>

@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import { profile } from '../data/profile';
+import { media } from '../data/media';
 
 interface Props {
   title: string;
@@ -34,7 +35,7 @@ const { title, description = profile.site.description } = Astro.props;
     {profile.background.image && (
       <div class="site-bg" style={`--bg-scale: ${profile.background.scale};`}>
         <img
-          src={profile.background.image}
+          src={media(profile.background.image)}
           alt=""
           style={`opacity: ${profile.background.opacity}; filter: blur(${profile.background.blur});`}
           loading="eager"

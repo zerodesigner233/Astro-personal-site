@@ -1,12 +1,13 @@
 ---
 import { profile } from '../../data/profile';
+import { media } from '../../data/media';
 ---
 
 <div class="container" style="padding-top:24px; padding-bottom:24px;">
   <div class="about-grid">
     <div class="fade-in">
       <div class="about-avatar">
-        <img src={profile.avatar} alt={profile.name} class="about-avatar-img" />
+        <img src={media(profile.avatar)} alt={profile.name} class="about-avatar-img" />
       </div>
       <div style="margin-top:14px; text-align:center;">
         <div class="gradient-text" style="font-size:16px; font-weight:700; letter-spacing:-0.02em;">{profile.name}</div>

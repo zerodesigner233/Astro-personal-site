@@ -1,5 +1,6 @@
 ---
 import { profile } from '../../data/profile';
+import { media } from '../../data/media';
 
 const tabs = [
   { key: 'works', label: 'nav.works', num: '01' },
@@ -14,7 +15,7 @@ const isDetail = segments.length > 1;
 {isDetail ? (
   <header class="detail-header">
       <a href="/" class="avatar" aria-label="Home">
-        <img src={profile.avatar} alt={profile.name} class="avatar-img" />
+        <img src={media(profile.avatar)} alt={profile.name} class="avatar-img" />
       </a>
       <div style="flex:1"></div>
     <button class="theme-toggle" style="padding:6px;border-radius:8px;background:none;border:1px solid var(--border);cursor:pointer;color:var(--text-2);display:flex;align-items:center;justify-content:center;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--color-accent)';this.style.color='var(--color-accent)';this.style.boxShadow='0 0 12px var(--glow)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-2)';this.style.boxShadow='none'">
@@ -30,7 +31,7 @@ const isDetail = segments.length > 1;
   <header id="site-header">
     <div class="container flex items-center justify-between h-full">
       <a href="/" class="avatar" aria-label="Home">
-        <img src={profile.avatar} alt={profile.name} class="avatar-img" />
+        <img src={media(profile.avatar)} alt={profile.name} class="avatar-img" />
       </a>
 
       <nav class="flex items-center h-full">
