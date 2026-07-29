@@ -7,7 +7,7 @@ export const i18n = {
     'nav.contact': 'CONTACT',
 
     'hero.greeting': "Hello, I'm",
-    'hero.name': 'dev_',
+    'hero.name': 'rapeseed_flower233',
     'hero.title': 'Frontend Developer',
     'hero.desc': 'I craft pixel-perfect, high-performance web experiences with clean code and thoughtful design.',
     'hero.btn_projects': 'VIEW PROJECTS',
@@ -21,8 +21,9 @@ export const i18n = {
 
     'about.label': 'ABOUT ME',
     'about.title': 'A Bit About Me',
-    'about.p1': "I'm a frontend developer with a passion for creating beautiful, functional web applications. I love working with modern frameworks and turning complex problems into elegant solutions.",
-    'about.p2': "When I'm not coding, you'll find me exploring new technologies, contributing to open source, or experimenting with pixel art and retro aesthetics.",
+    'about.currently_heading': 'Currently',
+    'about.p1': "A freelancer exploring full-stack development, pixel art enthusiast, practicing experimental music production. I build small games and utility tools, and occasionally have bold ideas and try to make them happen.",
+    'about.p2': "",
     'about.stat_years': 'Years Experience',
     'about.stat_projects': 'Projects Completed',
     'about.stat_clients': 'Happy Clients',
@@ -43,13 +44,21 @@ export const i18n = {
     'blog.read': 'READ MORE',
     'blog.all_posts': 'ALL POSTS',
 
+    'works.all': 'All',
+    'works.painting': 'Painting',
+    'works.music': 'Music',
+    'works.design': 'Design',
+    'works.code': 'Code',
+
+    'detail.back': '← Back',
+
     'contact.label': 'CONTACT',
     'contact.title': "Let's Work Together",
     'contact.desc': "Have a project in mind? I'd love to hear about it. Let's build something amazing together.",
-    'contact.email': 'hello@example.com',
+    'contact.email': 'xiany9230@gmail.com',
     'contact.btn_email': 'SEND EMAIL',
     'contact.btn_github': 'GITHUB',
-    'contact.btn_twitter': 'TWITTER',
+    'contact.btn_bilibili': 'BILIBILI',
 
     'footer.rights': 'ALL RIGHTS RESERVED',
   },
@@ -61,7 +70,7 @@ export const i18n = {
     'nav.contact': '联系',
 
     'hero.greeting': '你好，我是',
-    'hero.name': 'dev_',
+    'hero.name': 'rapeseed_flower233',
     'hero.title': '前端开发工程师',
     'hero.desc': '我专注于打造像素级完美、高性能的 Web 体验，用干净的代码和用心的设计。',
     'hero.btn_projects': '查看项目',
@@ -75,8 +84,9 @@ export const i18n = {
 
     'about.label': '关于我',
     'about.title': '简单介绍一下',
-    'about.p1': '我是一名前端开发者，热衷于创建美观、功能强大的 Web 应用。我喜欢使用现代框架，将复杂的问题转化为优雅的解决方案。',
-    'about.p2': '不写代码的时候，我会探索新技术、参与开源项目，或者尝试像素艺术和复古美学。',
+    'about.currently_heading': '当前动态',
+    'about.p1': '一个尝试做全栈开发的自由人，像素画爱好者，正在练习实验编曲，会搓些小游戏和小工具应用，偶尔会有些大胆的想法并尝试着做一做。',
+    'about.p2': '',
     'about.stat_years': '年经验',
     'about.stat_projects': '完成项目',
     'about.stat_clients': '满意客户',
@@ -97,13 +107,21 @@ export const i18n = {
     'blog.read': '阅读全文',
     'blog.all_posts': '查看全部',
 
+    'works.all': '全部',
+    'works.painting': '绘画',
+    'works.music': '音乐',
+    'works.design': '设计',
+    'works.code': '代码',
+
+    'detail.back': '← 返回',
+
     'contact.label': '联系',
     'contact.title': '一起合作吧',
     'contact.desc': '有项目想法？我很想听听。让我们一起打造精彩的作品。',
-    'contact.email': 'hello@example.com',
+    'contact.email': 'xiany9230@gmail.com',
     'contact.btn_email': '发送邮件',
     'contact.btn_github': 'GitHub',
-    'contact.btn_twitter': 'Twitter',
+    'contact.btn_bilibili': '哔哩哔哩',
 
     'footer.rights': '版权所有',
   },

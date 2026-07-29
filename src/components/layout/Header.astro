@@ -13,11 +13,10 @@ const isDetail = segments.length > 1;
 
 {isDetail ? (
   <header class="detail-header">
-    <a href="/" class="back-link">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-      <span data-i18n="detail.back">Back</span>
-    </a>
-    <div style="flex:1"></div>
+      <a href="/" class="avatar" aria-label="Home">
+        <img src={profile.avatar} alt={profile.name} class="avatar-img" />
+      </a>
+      <div style="flex:1"></div>
     <button class="theme-toggle" style="padding:6px;border-radius:8px;background:none;border:1px solid var(--border);cursor:pointer;color:var(--text-2);display:flex;align-items:center;justify-content:center;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--color-accent)';this.style.color='var(--color-accent)';this.style.boxShadow='0 0 12px var(--glow)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-2)';this.style.boxShadow='none'">
       <span class="icon-sun">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
@@ -30,8 +29,8 @@ const isDetail = segments.length > 1;
 ) : (
   <header id="site-header">
     <div class="container flex items-center justify-between h-full">
-      <a href="/" class="flex items-center shrink-0 glitch-hover" style="text-decoration:none;">
-        <span class="gradient-text" style="font-weight:800;font-size:17px;letter-spacing:-0.03em;">{profile.name.replace('_', '')}</span><span style="color:var(--color-accent);font-weight:800;font-size:17px;">_</span>
+      <a href="/" class="avatar" aria-label="Home">
+        <img src={profile.avatar} alt={profile.name} class="avatar-img" />
       </a>
 
       <nav class="flex items-center h-full">

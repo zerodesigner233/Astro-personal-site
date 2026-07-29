@@ -55,7 +55,7 @@ const { title, description = profile.site.description } = Astro.props;
             'nav.blog': 'Blog',
             'nav.about': 'About',
             'hero.tag': 'Creative Developer',
-            'hero.name': 'dev_',
+            'hero.name': 'rapeseed_flower233',
             'hero.desc': 'Creating across pixels, sound, and code.',
             'works.title': 'Selected Works',
             'works.all': 'All',
@@ -68,12 +68,14 @@ const { title, description = profile.site.description } = Astro.props;
             'blog.all': 'All',
             'blog.read': 'Read',
             'about.title': 'About Me',
-            'about.p1': 'A creative developer passionate about building beautiful, functional digital experiences.',
-            'about.p2': 'When I\'m not creating, you\'ll find me exploring new technologies and experimenting with generative art.',
-            'about.currently': 'Building creative tools & exploring generative art with code.',
+            'about.p1': 'A freelancer exploring full-stack development, pixel art enthusiast, practicing experimental music production. I build small games and utility tools, and occasionally have bold ideas and try to make them happen.',
+            'about.p2': '',
+            'about.currently': 'Working on indie dev projects at home, taking freelance gigs, and looking for suitable job opportunities.',
             'about.github': 'GitHub',
             'about.email': 'Email',
-            'about.twitter': 'Twitter',
+            'about.bilibili': 'Bilibili',
+            'about.currently_heading': 'Currently',
+            'nav.lang': 'EN',
             'footer.rights': 'All rights reserved',
             'detail.back': 'Back',
           },
@@ -82,7 +84,7 @@ const { title, description = profile.site.description } = Astro.props;
             'nav.blog': '博客',
             'nav.about': '关于',
             'hero.tag': '创意开发者',
-            'hero.name': 'dev_',
+            'hero.name': 'rapeseed_flower233',
             'hero.desc': '在像素、声音与代码之间创作。',
             'works.title': '精选作品',
             'works.all': '全部',
@@ -95,12 +97,14 @@ const { title, description = profile.site.description } = Astro.props;
             'blog.all': '全部',
             'blog.read': '阅读',
             'about.title': '关于我',
-            'about.p1': '一名创意开发者，热衷于构建美观、实用的数字体验。',
-            'about.p2': '不创作的时候，我会探索新技术，尝试生成艺术。',
-            'about.currently': '正在构建创意工具，探索生成式艺术。',
+            'about.p1': '一个尝试做全栈开发的自由人，像素画爱好者，正在练习实验编曲，会搓些小游戏和小工具应用，偶尔会有些大胆的想法并尝试着做一做。',
+            'about.p2': '',
+            'about.currently': '在家做独立开发项目，正在尝试接单，和看看有没有适合的工作。',
             'about.github': 'GitHub',
             'about.email': '邮箱',
-            'about.twitter': 'Twitter',
+            'about.bilibili': '哔哩哔哩',
+            'about.currently_heading': '当前动态',
+            'nav.lang': '中',
             'footer.rights': '版权所有',
             'detail.back': '返回',
           }
@@ -117,7 +121,26 @@ const { title, description = profile.site.description } = Astro.props;
               el.textContent = i18n[lang][key];
             }
           });
+          document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
+            el.textContent = el.getAttribute('data-' + lang) || el.textContent;
+          });
+          document.querySelectorAll('[data-i18n-desc]').forEach(function (el) {
+            el.textContent = el.getAttribute('data-' + lang) || el.textContent;
+          });
+          document.querySelectorAll('[data-i18n-stat]').forEach(function (el) {
+            el.textContent = el.getAttribute('data-' + lang) || el.textContent;
+          });
         }
+
+        // Prevent theme flash during client-side navigation by setting the correct
+        // data-theme on the incoming document before it is swapped in
+        document.addEventListener('astro:before-swap', function (e) {
+          var currentTheme = document.documentElement.getAttribute('data-theme');
+          var newDoc = e.detail && e.detail.newDocument;
+          if (newDoc && currentTheme) {
+            newDoc.documentElement.setAttribute('data-theme', currentTheme);
+          }
+        });
 
         function initSite() {
           document.body.style.visibility = 'visible';

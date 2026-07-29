@@ -1,4 +1,7 @@
 export const profile = {
+  // ── 头像 ──
+  avatar: '/rapeseedflower233.png',
+
   // ── 背景图片 ──
   // 放一张图到 public/ 目录，然后填路径即可
   background: {
@@ -9,46 +12,44 @@ export const profile = {
   },
 
   // ── 基本信息 ──
-  name: 'dev_',
+  name: 'rapeseed_flower233',
   title: 'Creative Developer',
-  email: 'hello@example.com',
+  email: 'xiany9230@gmail.com',
 
   // ── 个人简介 ──
   bio: {
     en: [
-      'A creative developer passionate about building beautiful, functional digital experiences.',
-      'When I\'m not creating, you\'ll find me exploring new technologies and experimenting with generative art.',
+      'A freelancer exploring full-stack development, pixel art enthusiast, practicing experimental music production. I build small games and utility tools, and occasionally have bold ideas and try to make them happen.',
     ],
     zh: [
-      '一名创意开发者，热衷于构建美观、实用的数字体验。',
-      '不创作的时候，我会探索新技术，尝试生成艺术。',
+      '一个尝试做全栈开发的自由人，像素画爱好者，正在练习实验编曲，会搓些小游戏和小工具应用，偶尔会有些大胆的想法并尝试着做一做。',
     ],
   },
 
   // ── 当前动态 ──
   currently: {
-    en: 'Building creative tools & exploring generative art with code.',
-    zh: '正在构建创意工具，探索生成式艺术。',
+    en: 'Working on indie dev projects at home, taking freelance gigs, and looking for suitable job opportunities.',
+    zh: '在家做独立开发项目，正在尝试接单，和看看有没有适合的工作。',
   },
 
   // ── 社交链接 ──
   links: [
-    { label: 'GitHub', url: 'https://github.com/your-username', icon: 'github' },
-    { label: 'Twitter', url: 'https://twitter.com/your-handle', icon: 'twitter' },
-    { label: 'Email', url: 'mailto:hello@example.com', icon: 'email' },
+    { label: 'GitHub', url: 'https://github.com/zerodesigner', icon: 'github' },
+    { label: 'Bilibili', url: 'https://space.bilibili.com/3546904682040074', icon: 'bilibili' },
+    { label: 'Email', url: 'mailto:xiany9230@gmail.com', icon: 'email' },
   ],
 
   // ── 统计数据 ──
   stats: [
-    { num: 5, suffix: '+', label: { en: 'Years', zh: '年经验' } },
-    { num: 30, suffix: '+', label: { en: 'Projects', zh: '个项目' } },
-    { num: 100, suffix: '+', label: { en: 'Coffee', zh: '杯咖啡' } },
+    { num: 1, suffix: '+', label: { en: 'Years', zh: '年经验' } },
+    { num: 3, suffix: '+', label: { en: 'Projects', zh: '个项目' } },
+    { num: 0, suffix: '', label: { en: 'Coffee', zh: '杯咖啡' } },
   ],
 
   // ── 站点信息 ──
   site: {
-    name: 'dev_',
-    title: 'dev_ | Creative Developer',
+    name: 'rapeseed_flower233',
+    title: 'rapeseed_flower233 | Creative Developer',
     description: 'Creating across pixels, sound, and code.',
   },
 };

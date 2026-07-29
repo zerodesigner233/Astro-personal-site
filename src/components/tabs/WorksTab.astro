@@ -12,6 +12,7 @@ const colorMap: Record<string, string> = {
 };
 
 function getSpanClass(i: number): string {
+  if (works.length < 6) return '';
   if (i === 0) return 'span-2';
   if (i === 3) return 'span-row';
   return '';
@@ -26,7 +27,7 @@ function getSpanClass(i: number): string {
 
   <div class="tag-filter" id="work-filters">
     {categories.map((cat) => (
-      <button class={cat === 'all' ? 'active' : ''} data-filter={cat}>
+      <button class={cat === 'all' ? 'active' : ''} data-filter={cat} data-i18n={`works.${cat}`}>
         {cat === 'all' ? 'All' : cat.charAt(0).toUpperCase() + cat.slice(1)}
       </button>
     ))}
@@ -40,6 +41,8 @@ function getSpanClass(i: number): string {
           href={`/works/${work.id}`}
           class={`bento-item fade-in ${getSpanClass(i)}`}
           data-category={work.data.category}
+          data-work-id={work.id}
+          draggable="true"
         >
           {work.data.cover ? (
             <img src={work.data.cover} alt={work.data.title} class="bento-img" loading="lazy" />
@@ -49,8 +52,8 @@ function getSpanClass(i: number): string {
             </div>
           )}
           <div class="bento-overlay">
-            <h3>{work.data.title}</h3>
-            <span>{work.data.category.charAt(0).toUpperCase() + work.data.category.slice(1)} &middot; {work.data.date.getFullYear()}</span>
+            <h3 data-i18n-title data-en={work.data.title} data-zh={work.data.title_zh || work.data.title}>{work.data.title}</h3>
+            <span><span data-i18n={`works.${work.data.category}`}>{work.data.category.charAt(0).toUpperCase() + work.data.category.slice(1)}</span> &middot; {work.data.date.getFullYear()}</span>
           </div>
         </a>
       );
@@ -60,14 +63,31 @@ function getSpanClass(i: number): string {
 
 <script is:inline>
   function initWorks() {
+    var grid = document.getElementById('works-grid');
     var filterBtns = document.querySelectorAll('#work-filters button');
-    var items = document.querySelectorAll('#works-grid .bento-item');
-    // Mark animation as done after first play to prevent re-animation on filter
+    var items = grid.querySelectorAll('.bento-item');
+
+    // Restore saved order
+    var orderKey = 'works-order';
+    try {
+      var saved = JSON.parse(localStorage.getItem(orderKey) || '[]');
+      if (saved.length > 0) {
+        saved.forEach(function(id) {
+          var el = grid.querySelector('[data-work-id="' + id + '"]');
+          if (el) grid.appendChild(el);
+        });
+      }
+    } catch(e) {}
+
+    // Mark animation as done
     if (!items[0] || !items[0]._animated) {
       setTimeout(function() {
         items.forEach(function(item) { item.classList.add('no-anim'); item._animated = true; });
       }, 600);
     }
+
+    // Filter buttons
+    var categories = ['painting', 'music', 'design', 'code'];
     filterBtns.forEach(function(btn) {
       if (btn._bound) return;
       btn._bound = true;
@@ -75,11 +95,50 @@ function getSpanClass(i: number): string {
         filterBtns.forEach(function(b) { b.classList.remove('active'); });
         btn.classList.add('active');
         var filter = btn.getAttribute('data-filter');
-        items.forEach(function(item) {
-          var show = filter === 'all' || item.getAttribute('data-category') === filter;
+        var activeCats = filter === 'all' ? categories : [filter];
+        grid.querySelectorAll('.bento-item').forEach(function(item) {
+          var cat = item.getAttribute('data-category');
+          var show = activeCats.indexOf(cat) !== -1;
           item.classList.toggle('hidden', !show);
         });
       });
+    });
+
+    // ── Drag & Drop ──
+    var dragSrc = null;
+    grid.addEventListener('dragstart', function(e) {
+      var el = e.target.closest('.bento-item');
+      if (!el) return;
+      dragSrc = el;
+      el.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', el.getAttribute('data-work-id') || '');
+    });
+    grid.addEventListener('dragend', function(e) {
+      var el = e.target.closest('.bento-item');
+      if (el) el.classList.remove('dragging');
+      grid.querySelectorAll('.bento-item').forEach(function(item) { item.classList.remove('drag-over'); });
+      dragSrc = null;
+    });
+    grid.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      var target = e.target.closest('.bento-item');
+      if (!target || target === dragSrc) return;
+      var rect = target.getBoundingClientRect();
+      var mid = rect.top + rect.height / 2;
+      if (e.clientY < mid) {
+        grid.insertBefore(dragSrc, target);
+      } else {
+        grid.insertBefore(dragSrc, target.nextSibling);
+      }
+    });
+    grid.addEventListener('drop', function(e) {
+      e.preventDefault();
+      var order = [];
+      grid.querySelectorAll('.bento-item').forEach(function(el) {
+        order.push(el.getAttribute('data-work-id'));
+      });
+      try { localStorage.setItem(orderKey, JSON.stringify(order)); } catch(e) {}
     });
   }
   document.addEventListener('DOMContentLoaded', initWorks);
