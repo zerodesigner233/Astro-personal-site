@@ -31,7 +31,7 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags))];
   <div class="post-list" id="posts-list">
     {posts.map((post, i) => (
       <a
-        href={import.meta.env.BASE_URL + `/blog/${post.id}`}
+        href={import.meta.env.BASE_URL + `blog/${post.id}`}
         class="post-item fade-in"
         data-tags={post.data.tags.join(',')}
         data-title={post.data.title.toLowerCase()}
@@ -87,7 +87,7 @@ const allTags = [...new Set(posts.flatMap(p => p.data.tags))];
     async function pagefindSearch(query) {
       if (!pagefindReady) {
         try {
-          window.pagefind = await import(import.meta.env.BASE_URL + '/pagefind/pagefind.js');
+          window.pagefind = await import(import.meta.env.BASE_URL + 'pagefind/pagefind.js');
           await window.pagefind.init();
           pagefindReady = true;
         } catch (e) {

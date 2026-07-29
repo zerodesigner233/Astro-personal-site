@@ -39,7 +39,7 @@ function getSpanClass(i: number): string {
       const color = colorMap[work.data.category] || 'var(--text-3)';
       return (
         <a
-          href={import.meta.env.BASE_URL + `/works/${work.id}`}
+          href={import.meta.env.BASE_URL + `works/${work.id}`}
           class={`bento-item fade-in ${getSpanClass(i)}`}
           data-category={work.data.category}
           data-work-id={work.id}
