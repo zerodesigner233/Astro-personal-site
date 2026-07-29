@@ -43,6 +43,7 @@ jobs:
           R2_PATH_PREFIX: ${{ vars.R2_PATH_PREFIX || 'Cloudfare/website' }}
       - run: npm run build
         env:
+          BASE_PATH: /Astro-personal-site
           R2_PUBLIC_URL: ${{ vars.R2_PUBLIC_URL || 'https://pub-0e8b2f3d84ed4442bac9e16d61465b6c.r2.dev' }}
           R2_PATH_PREFIX: ${{ vars.R2_PATH_PREFIX || 'Cloudfare/website' }}
       - uses: actions/upload-pages-artifact@v3
