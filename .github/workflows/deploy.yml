@@ -14,11 +14,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  R2_PUBLIC_URL: ${{ vars.R2_PUBLIC_URL }}
-  R2_PATH_PREFIX: ${{ vars.R2_PATH_PREFIX }}
-  R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
-  R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-  R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+  R2_PUBLIC_URL: ${{ vars.R2_PUBLIC_URL || 'https://pub-0e8b2f3d84ed4442bac9e16d61465b6c.r2.dev' }}
+  R2_PATH_PREFIX: ${{ vars.R2_PATH_PREFIX || 'Cloudfare/website' }}
 
 jobs:
   build:
@@ -30,18 +27,24 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run upload-media
+      - name: Upload media to R2 (skip if secrets not set)
+        run: |
+          if [ -n "${{ secrets.R2_ACCOUNT_ID }}" ] && [ -n "${{ secrets.R2_ACCESS_KEY_ID }}" ] && [ -n "${{ secrets.R2_SECRET_ACCESS_KEY }}" ]; then
+            npm run upload-media
+          else
+            echo "R2 secrets not configured, skipping media upload"
+          fi
         env:
           R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          R2_BUCKET: ${{ vars.R2_BUCKET }}
-          R2_PUBLIC_URL: ${{ vars.R2_PUBLIC_URL }}
-          R2_PATH_PREFIX: ${{ vars.R2_PATH_PREFIX }}
+          R2_BUCKET: ${{ vars.R2_BUCKET || 'my-portfolio-media' }}
+          R2_PUBLIC_URL: ${{ vars.R2_PUBLIC_URL || 'https://pub-0e8b2f3d84ed4442bac9e16d61465b6c.r2.dev' }}
+          R2_PATH_PREFIX: ${{ vars.R2_PATH_PREFIX || 'Cloudfare/website' }}
       - run: npm run build
         env:
-          R2_PUBLIC_URL: ${{ vars.R2_PUBLIC_URL }}
-          R2_PATH_PREFIX: ${{ vars.R2_PATH_PREFIX }}
+          R2_PUBLIC_URL: ${{ vars.R2_PUBLIC_URL || 'https://pub-0e8b2f3d84ed4442bac9e16d61465b6c.r2.dev' }}
+          R2_PATH_PREFIX: ${{ vars.R2_PATH_PREFIX || 'Cloudfare/website' }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

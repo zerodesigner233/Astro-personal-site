@@ -14,7 +14,8 @@ const {
 
 if (!R2_ACCOUNT_ID || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY) {
   console.error('Missing required env vars: R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY');
-  process.exit(1);
+  console.error('Skipping upload.');
+  process.exit(0);
 }
 
 const s3 = new S3Client({
